@@ -10,73 +10,75 @@ Moo.AST = function (structure) {
     newStructure.arglist = structure.arglist;
     newStructure.contents = [];
 
-    function process (value, buf) {
-        value = Moo.AST(value);
-        if (!value) return true;
+    function stuffs (oldVals, buf) {
+        oldVals.every(function (value) {
+            value = Moo.AST(value);
+            if (!value) return true;
 
-        switch (lastPunctuation) {
-            case '.':
-                if (value.type !== 'identifier') {
-                    throw new Error ('Unexpected "' + value.type + '"');
-                }
-                buf.push({
-                    type: "dotAccess",
-                    object: lastObject,
-                    access: value
-                });
-                lastPunctuation = undefined;
-                lastObject = undefined;
+            switch (lastPunctuation) {
+                case '.':
+                    if (value.type !== 'identifier') {
+                        throw new Error ('Unexpected "' + value.type + '"');
+                    }
+                    buf.push({
+                        type: "dotAccess",
+                        object: lastObject,
+                        access: value
+                    });
+                    lastPunctuation = undefined;
+                    lastObject = undefined;
+                    return true;
+
+                case '$':
+                    if (value.type !== 'identifier' && value.type !== 'bracketAccess') {
+                        throw new Error ('Unexpected "' + value.type + '"');
+                    }
+                    buf.push({
+                        type: "dollarAccess",
+                        object: lastObject,
+                        access: value.type === 'bracketAccess' ? value.contents[0] : value
+                    });
+                    lastPunctuation = undefined;
+                    lastObject = undefined;
+                    return true;
+            }
+
+            if (value.type === 'punctuation') {
+                lastPunctuation = value.value;
                 return true;
+            }
 
-            case '$':
-                if (value.type !== 'identifier' && value.type !== 'bracketAccess') {
-                    throw new Error ('Unexpected "' + value.type + '"');
-                }
-                buf.push({
-                    type: "dollarAccess",
-                    object: lastObject,
-                    access: value.type === 'bracketAccess' ? value.contents[0] : value
-                });
-                lastPunctuation = undefined;
-                lastObject = undefined;
+            if (value.type === 'comment') {
                 return true;
-        }
+            }
 
-        if (value.type === 'punctuation') {
-            lastPunctuation = value.value;
+            if (value.type === 'bracketAccess') {
+                buf.push(value);
+                value.object = lastObject;
+                lastObject = undefined;
+            }
+
+            if (lastObject) {
+                buf.push(lastObject);
+            }
+
+            lastObject = value;
+
             return true;
-        }
-
-        if (value.type === 'comment') {
-            return true;
-        }
-
-        if (value.type === 'bracketAccess') {
-            buf.push(value);
-            value.object = lastObject;
-            lastObject = undefined;
-        }
+        });
 
         if (lastObject) {
+            //noinspection JSUnusedAssignment
             buf.push(lastObject);
+            lastObject = undefined;
         }
-
-        lastObject = value;
-
-        return true;
     }
 
-    structure.contents.every(process, newStructure.contents);
+    stuffs(structure.contents, newStructure.contents);
 
     if (structure.variables) {
         newStructure.variables = [];
-        structure.variables.every(process, newStructure.variables);
-    }
-
-
-    if (lastObject) {
-        //noinspection JSUnusedAssignment
-        newStructure.contents.push(lastObject);
+        stuffs(structure.variables, newStructure.variables);
     }
 
     if (newStructure.type === 'call') {

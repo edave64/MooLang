@@ -1,11 +1,10 @@
 Moo.JS = function (ast) {
+    var a;
     if (!ast) {
         return "";
     }
-    b = ast;
-    /*console.log(ast);
-    console.log(ast.type);*/
-    return Moo.JS.translators[ast.type](ast);
+    a = Moo.JS.translators[ast.type](ast);
+    return a;
 };
 
 var translate = Moo.JS.translators = {};

@@ -18,6 +18,18 @@ Moo.JS.BaseScope = {
         return val;
     },
 
+    "switch": function (val1) {
+        return function (val2) {
+            var willExec = (val1 === val2);
+
+            return function (func) {
+                if (willExec) {
+                    func();
+                }
+            }
+        }
+    },
+
     "true": true,
     "false": false,
     "nil": undefined,
