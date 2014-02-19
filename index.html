@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="tokenizer.js"></script>
+    <script src="genStructure.js"></script>
+    <script src="ast.js"></script>
+    <script src="js.js"></script>
+    <script src="js-runtime.js"></script>
+</head>
+<body>
+<textarea id="area" onkeyup=""></textarea><br />
+<button onclick="js.innerHTML = Moo.JS(Moo.genStructure(Moo.tokenizer(area.value))).toString();
+eval(Moo.JS(Moo.genStructure(Moo.tokenizer(area.value))))">eggsecute</button>
+<!--<h2 style="display: none">Tokens</h2>
+<p id="tokens" style="font-family: monospace;display: none"></p>
+<h2 style="display: none">Structure</h2>
+<p id="structure" style="font-family: monospace;display: none"></p>
+<h2 style="display: none">AST</h2>
+<p id="ast" style="font-family: monospace;display: none"></p>-->
+<h2 style="">JS</h2>
+<p id="js" style="font-family: monospace;"></p>
+<script>
+    area = document.getElementById('area');
+    /*tokens = document.getElementById('tokens');
+    structure = document.getElementById('structure');
+    ast = document.getElementById('ast');*/
+    js = document.getElementById('js');
+</script>
+</body>
+</html>
