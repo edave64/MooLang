@@ -40,7 +40,7 @@ translate.number = function (obj) {
 };
 
 translate.string = function (obj) {
-    return '"' + obj.value.toString() + '"';
+    return 'new Moo.JS.String("' + obj.value.toString() + '")';
 };
 
 translate.lambda = function (obj) {
@@ -48,14 +48,14 @@ translate.lambda = function (obj) {
     if (!obj.arglist) obj.arglist = [];
     obj.arglist.every(function (val, key) {
         if (key > 0) {
-            res += 'return function (' + val.value + ') {\n';
+            res += 'return Moo.JS.Function(function (' + val.value + ') {\n';
         } else {
-            res += 'function (' + val.value + ') {\n';
+            res += 'Moo.JS.Function(function (' + val.value + ') {\n';
         }
         return true;
     });
     if (obj.arglist.length === 0) {
-        res += 'function () {\n';
+        res += 'Moo.JS.Function(function () {\n';
     }
     res += "var scope = Object.create(ownFunction.scope);\nscope.scope = scope;\n";
     obj.arglist.every(function (val, key) {
@@ -72,14 +72,14 @@ translate.lambda = function (obj) {
     });
     obj.arglist.every(function (val, key) {
         if (key === obj.arglist.length - 1) {
-            res += '}\n';
+            res += '})\n';
         } else {
-            res += '}\n';
+            res += '})\n';
         }
         return true;
     });
     if (obj.arglist.length === 0) {
-        res += '}\n';
+        res += '})\n';
     }
     return res + ';\nownFunction.scope = Object.create(scope);return ownFunction;\n}())';
 };
@@ -177,6 +177,10 @@ translate.dotAccess = function (obj) {
 };
 
 translate.dollarAccess = function (obj) {
-    return '(function () {var obj = ' + Moo.JS(obj.object) + '; obj.' + obj.access.value + '(obj)}())\n';
+    return '(function () {var obj = ' + Moo.JS(obj.object) + '; return obj.' + obj.access.value + '(obj)}())\n';
+};
+
+translate.operatorAccess = function (obj) {
+    return '(function () {var obj = ' + Moo.JS(obj.object) + '; return obj["' + obj.access.value + '"](obj)}())\n';
 };
 

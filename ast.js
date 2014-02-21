@@ -53,8 +53,17 @@ Moo.AST = function (structure) {
             }
 
             if (value.type === 'bracketAccess') {
-                buf.push(value);
                 value.object = lastObject;
+                lastObject = undefined;
+            }
+
+            if (value.type === 'operator') {
+                value = {
+                    type: 'operatorAccess',
+                    object: lastObject,
+                    start: lastObject.start,
+                    access: value
+                };
                 lastObject = undefined;
             }
 
