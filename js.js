@@ -36,7 +36,7 @@ translate.identifier = function (obj) {
 };
 
 translate.number = function (obj) {
-    return obj.value;
+    return'new Moo.JS.Number(' + obj.value + ')';
 };
 
 translate.string = function (obj) {

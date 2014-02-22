@@ -94,7 +94,7 @@ Moo.tokenizer = function (code) {
                 }
                 bufferPush('punctuation', word);
                 parenthesisStack.pop();
-            } else if (word.match(/[\?\+\-\\*\/%&$§"!=@€~\|<>]+/)) {
+            } else if (word.match(/[\?\+\-\\*\/%&$§"!=@€~\|<>\^]+/)) {
                 bufferPush('operator', word);
             } else {
                 bufferPush('identifier', word);
