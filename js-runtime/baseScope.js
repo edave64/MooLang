@@ -1,7 +1,7 @@
 Moo.JS.BaseScope = Object.create(Moo.JS.Object.prototype);
 Moo.JS.Object.prototype.extend(Moo.JS.BaseScope)({
     cio : {
-        log: Moo.JS.Function (function (str) {
+        out: Moo.JS.Function (function (str) {
             console.log(str.toNativeString());
         })
     },
