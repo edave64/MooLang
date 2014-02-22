@@ -211,4 +211,5 @@ MooLang does not yet have a way to define floating point numbers. The problem is
 that the `.` symbol is already taken. To create a floating point number,
 you have to do something like this:
 
-   123 / 100
+    123 / 100
+
