@@ -79,7 +79,16 @@
         return new Moo.JS.String(self.__s.toString());
     });
 
-    proto.toNativeString = Moo.JS.Function(function (self) {
-        return self.__s.toString();
+    proto.toNativeString = Moo.JS.Function(function () {
+        return this.__s.toString();
+    });
+
+    proto.times = Moo.JS.Function(function (self) {
+        return Moo.JS.Function(function (callback) {
+            var i;
+            for (i = 0; i < self.__s; i++) {
+                callback(new Moo.JS.Number(i));
+            }
+        });
     });
 }());

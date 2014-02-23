@@ -11,7 +11,7 @@ Moo.tokenizer = function (code) {
         buf = [],
         line = 1,
         lineTemp,
-        opCharStr = '\\W',
+        opCharStr = '[^\\w\\$:\\.\\(\\)\\[\\]\\[\\]]',
         opCharMatch = new RegExp('^' + opCharStr + '$'),
         opMatch = new RegExp('^' + opCharStr + '+$'),
         isOpChar;

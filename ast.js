@@ -91,7 +91,9 @@ Moo.AST = function (structure) {
     }
 
     if (newStructure.type === 'call') {
-        if (newStructure.contents.length === 0) return undefined;
+        if (newStructure.contents.length === 0) { //noinspection JSConstructorReturnsPrimitive
+            return undefined;
+        }
 
         newStructure.method = newStructure.contents.shift();
     }
