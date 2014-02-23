@@ -15,6 +15,10 @@
         });
     });
 
+    proto.isNil = Moo.JS.Function(function (self) {
+        return self === Moo.JS.Nil;
+    });
+
     proto.objectID = Moo.JS.Function(function (dest) {
         if (!dest.__id__) {
             dest.__id__ = id++;
@@ -48,5 +52,9 @@
         return Moo.JS.Function(function (other) {
             return new Moo.JS.Boolean(self !== other);
         });
+    });
+
+    proto['!'] = Moo.JS.Function(function (val) {
+        return (val === Moo.JS.False || val == Moo.JS.Nil) ? Moo.JS.True : Moo.JS.False;
     });
 }());

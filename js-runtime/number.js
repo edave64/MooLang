@@ -5,6 +5,7 @@
         this.__s = i;
     };
 
+    //noinspection JSPrimitiveTypeWrapperUsage
     var proto = Moo.JS.Number.prototype = Object.create(Moo.JS.Object.prototype);
     proto.toNativeString = Moo.JS.Function(function () {
         return this.__s.toString();
@@ -54,7 +55,31 @@
 
     Moo.JS.Comparable(proto);
 
+    proto.abs = Moo.JS.Function(function (self) {
+        return new Moo.JS.Number(Math.abs(self.__s));
+    });
+
+    proto.ceil = Moo.JS.Function(function (self) {
+        return new Moo.JS.Number(Math.ceil(self.__s));
+    });
+
+    proto.floor = Moo.JS.Function(function (self) {
+        return new Moo.JS.Number(Math.floor(self.__s));
+    });
+
+    proto.round = Moo.JS.Function(function (self) {
+        return new Moo.JS.Number(Math.round(self.__s));
+    });
+
+    proto.toI = Moo.JS.Function(function (self) {
+        return new Moo.JS.Number(Math.floor(self.__s));
+    });
+
+    proto.toS = Moo.JS.Function(function (self) {
+        return new Moo.JS.String(self.__s.toString());
+    });
+
     proto.toNativeString = Moo.JS.Function(function (self) {
-        return this.__s.toString();
+        return self.__s.toString();
     });
 }());

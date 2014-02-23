@@ -10,7 +10,11 @@ Moo.tokenizer = function (code) {
         nextTerminated = false, nextSeparated = false, nextComma = true,
         buf = [],
         line = 1,
-        lineTemp;
+        lineTemp,
+        opCharStr = '\\W',
+        opCharMatch = new RegExp('^' + opCharStr + '$'),
+        opMatch = new RegExp('^' + opCharStr + '+$'),
+        isOpChar;
 
     parenthesisStack.latest = function () {
         return this[this.length - 1];
@@ -94,7 +98,7 @@ Moo.tokenizer = function (code) {
                 }
                 bufferPush('punctuation', word);
                 parenthesisStack.pop();
-            } else if (word.match(/[\?\+\-\\*\/%&$§"!=@€~\|<>\^]+/)) {
+            } else if (word.match(opMatch)) {
                 bufferPush('operator', word);
             } else {
                 bufferPush('identifier', word);
@@ -177,6 +181,16 @@ Moo.tokenizer = function (code) {
                     finishWord();
                     break;
                 default:
+                    isOpChar = char.match(opCharMatch);
+                    if (word.match(opMatch)) {
+                        if (!isOpChar) {
+                            finishWord();
+                        }
+                    } else {
+                        if (isOpChar) {
+                            finishWord();
+                        }
+                    }
                     word += char;
             }
         }

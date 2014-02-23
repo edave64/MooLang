@@ -37,7 +37,7 @@ Moo.JS.Object.prototype.extend(Moo.JS.BaseScope)({
 
     "true": Moo.JS.True,
     "false": Moo.JS.False,
-    "nil": undefined,
+    "nil": Moo.JS.Nil,
 
     "native": window
 });

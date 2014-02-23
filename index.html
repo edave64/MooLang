@@ -9,15 +9,23 @@
     <script src="js-runtime/object-head.js"></script>
     <script src="js-runtime/function.js"></script>
     <script src="js-runtime/object.js"></script>
+    <script src="js-runtime/nil.js"></script>
     <script src="js-runtime/boolean.js"></script>
     <script src="js-runtime/comparable.js"></script>
     <script src="js-runtime/number.js"></script>
     <script src="js-runtime/string.js"></script>
     <script src="js-runtime/array.js"></script>
     <script src="js-runtime/baseScope.js"></script>
+    <style>
+        textarea {
+            width: 100%;
+            height: 256px;
+        }
+    </style>
 </head>
 <body>
-<textarea id="area" onkeyup=""></textarea><br />
+<label for="area">Moo-Code:</label>
+<textarea id="area" name="area" onkeyup=""></textarea><br />
 <button onclick="
 js.innerHTML = Moo.JS(Moo.AST(Moo.genStructure(Moo.tokenizer(area.value)))).toString();
 eval(Moo.JS(Moo.AST(Moo.genStructure(Moo.tokenizer(area.value)))))">execute</button>
