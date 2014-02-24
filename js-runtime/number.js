@@ -48,9 +48,7 @@
     });
 
     proto['//'] = Moo.JS.Function(function (self) {
-        return Moo.JS.Function(function (other) {
-            return new Moo.JS.Number(Math.pow(self.__s, 1 / other.__s));
-        });
+        return new Moo.JS.Number(Math.pow(self.__s, 1 / other.__s));
     });
 
     Moo.JS.Comparable(proto);
@@ -77,6 +75,26 @@
 
     proto.toS = Moo.JS.Function(function (self) {
         return new Moo.JS.String(self.__s.toString());
+    });
+
+    proto.mod = Moo.JS.Function(function (self) {
+        return Moo.JS.Function(function (other) {
+            return new Moo.JS.Number(
+                ((self.__s % other.__s) + other.__s) % other.__s
+            );
+        });
+    });
+
+    proto.divmod = Moo.JS.Function(function (self) {
+        var mod = proto.mod(self);
+        return Moo.JS.Function(function (other) {
+            var div;
+            mod = mod(other).__s;
+            div = (other.__s - mod) / self.__s;
+            return [
+                new Moo.JS.Number(div), new Moo.JS.Number(mod)
+            ];
+        });
     });
 
     proto.toNativeString = Moo.JS.Function(function () {

@@ -33,8 +33,18 @@
             });
         }),
 
-        ary: Moo.JS.Function(function () {
-            return new Moo.JS.Array ();
+        ary: Moo.JS.Function(function (value) {
+            var newArray = new Moo.JS.Array,
+                push = newArray.push(newArray),
+                appender = Moo.JS.Function(function (value) {
+                    if (value !== Moo.JS.Nil && value !== undefined) {
+                        push(value);
+                        return appender;
+                    } else {
+                        return newArray;
+                    }
+                });
+            return appender;
         }),
 
         "true": Moo.JS.True,

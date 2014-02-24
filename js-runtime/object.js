@@ -3,9 +3,6 @@
     var id = 1;
 
     var proto = Moo.JS.Object.prototype;
-    proto.clone = Moo.JS.Function(function (source) {
-
-    });
 
     proto.extend = Moo.JS.Function(function (dest) {
         return Moo.JS.Function(function (source) {
