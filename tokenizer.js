@@ -11,7 +11,7 @@
             buf = [],
             line = 1,
             lineTemp,
-            opCharStr = '[^\\w\\$:\\.\\(\\)\\[\\]\\[\\]]',
+            opCharStr = '[^\\w\\$:\\.\\(\\)\\[\\]\\[\\]\'\"]',
             opCharMatch = new RegExp('^' + opCharStr + '$'),
             opMatch = new RegExp('^' + opCharStr + '+$'),
             isOpChar;
