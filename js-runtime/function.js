@@ -1,6 +1,5 @@
 (function () {
     "use strict";
-
     var proto, constructor,
         func, obj;
 
