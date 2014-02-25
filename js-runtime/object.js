@@ -10,9 +10,11 @@
         _true,
         _false;
 
+    constructor = function () {};
+
     /* node switch */
     if (typeof module !== 'undefined') {
-        constructor = Moo.JS.Object = function () {};
+        Moo.JS.Object = constructor;
         func = Moo.JS.Function;
         bool = Moo.JS.Boolean;
         _true = Moo.JS.True;
@@ -20,9 +22,7 @@
         nil = Moo.JS.Nil;
         number = Moo.JS.Number;
     } else {
-        module.exports = constructor = function () {
-            this.__s = [];
-        };
+        module.exports = constructor;
         func = require('./function');
         bool = require('./boolean');
         number = require('./number');
