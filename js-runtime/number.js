@@ -121,8 +121,8 @@
 
     /* node switch */
     if (typeof module !== 'undefined') {
-        require('./comparable')(proto);
+        obj.prototype.extend(proto)(require('./comparable'));
     } else {
-        Moo.JS.Comparable(proto);
+        obj.prototype.extend(proto)(Moo.JS.Comparable);
     }
 }());

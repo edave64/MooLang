@@ -4,13 +4,13 @@
 
     /* node switch */
     if (typeof module !== 'undefined') {
-        obj = Moo.JS.Object;
-        Moo.JS.BaseScope = scope = Object.create(obj.prototype);
-        func = Moo.JS.Function;
-    } else {
         obj = require('./object');
         module.exports = scope = Object.create(obj.prototype);
         func = require('./function');
+    } else {
+        obj = Moo.JS.Object;
+        Moo.JS.BaseScope = scope = Object.create(obj.prototype);
+        func = Moo.JS.Function;
     }
 
     obj.prototype.extend(scope)({

@@ -216,7 +216,6 @@
         if (!window.Moo) {
             window.Moo = {};
         }
-        Moo.Tokenizer = tokenizer;
+        Moo.tokenizer = tokenizer;
     }
-    module.exports = tokenizer;
 }());
