@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    var scope, obj, func, scope;
+    var scope, obj, func;
 
     /* node switch */
     if (typeof module !== 'undefined') {
@@ -45,7 +45,7 @@
             });
         }),
 
-        ary: func(function (value) {
+        ary: func(function () {
             var newArray = new Moo.JS.Array,
                 push = newArray.push(newArray),
                 appender = func(function (value) {
