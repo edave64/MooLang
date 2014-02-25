@@ -3,5 +3,7 @@
 (function () {
     "use strict";
 
-    Moo.JS.Object = function () {};
+    if (typeof module === 'undefined') {
+        Moo.JS.Object = function () {};
+    }
 }());

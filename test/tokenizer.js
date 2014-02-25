@@ -3,7 +3,7 @@
     var assert = require("assert");
 
     describe('Tokenizer', function () {
-        describe('')
+        describe('');
         it('');
     });
 }());

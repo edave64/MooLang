@@ -14,14 +14,6 @@
 
     /* node switch */
     if (typeof module !== 'undefined') {
-        Moo.JS.Object = constructor;
-        func = Moo.JS.Function;
-        bool = Moo.JS.Boolean;
-        _true = Moo.JS.True;
-        _false = Moo.JS.False;
-        nil = Moo.JS.Nil;
-        number = Moo.JS.Number;
-    } else {
         module.exports = constructor;
         func = require('./function');
         bool = require('./boolean');
@@ -29,6 +21,14 @@
         _true = require('./true');
         _false = require('./false');
         nil = require('./nil');
+    } else {
+        Moo.JS.Object = constructor;
+        func = Moo.JS.Function;
+        bool = Moo.JS.Boolean;
+        _true = Moo.JS.True;
+        _false = Moo.JS.False;
+        nil = Moo.JS.Nil;
+        number = Moo.JS.Number;
     }
 
     proto = constructor.prototype;

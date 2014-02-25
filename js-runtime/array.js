@@ -2,19 +2,19 @@
     "use strict";
     var constructor, obj, func, proto;
 
+    constructor = function () {
+        this.__s = [];
+    };
+
     /* node switch */
     if (typeof module !== 'undefined') {
-        constructor = Moo.JS.Array = function () {
-            this.__s = [];
-        };
-        obj = Moo.JS.Object;
-        func = Moo.JS.Function;
-    } else {
-        module.exports = constructor = function () {
-            this.__s = [];
-        };
+        module.exports = constructor;
         obj = require('./object');
         func = require('./function');
+    } else {
+        Moo.JS.Array = constructor;
+        obj = Moo.JS.Object;
+        func = Moo.JS.Function;
     }
 
     proto = constructor.prototype = Object.create(obj.prototype);
