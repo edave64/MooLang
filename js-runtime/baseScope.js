@@ -1,14 +1,26 @@
 (function () {
     "use strict";
-    Moo.JS.BaseScope = Object.create(Moo.JS.Object.prototype);
-    Moo.JS.Object.prototype.extend(Moo.JS.BaseScope)({
+    var scope, obj, func, scope;
+
+    /* node switch */
+    if (typeof module !== 'undefined') {
+        obj = Moo.JS.Object;
+        Moo.JS.BaseScope = scope = Object.create(obj.prototype);
+        func = Moo.JS.Function;
+    } else {
+        obj = require('./object');
+        module.exports = scope = Object.create(obj.prototype);
+        func = require('./function');
+    }
+
+    obj.prototype.extend(scope)({
         cio : {
-            out: Moo.JS.Function (function (str) {
+            out: func(function (str) {
                 console.log(str.toNativeString());
             })
         },
 
-        "if": Moo.JS.Function (function (val) {
+        "if": func(function (val) {
             var willExec = (val !== false && val !== undefined);
             return function (func) {
                 if (willExec) {
@@ -17,15 +29,15 @@
             }
         }),
 
-        "val": Moo.JS.Function (function (val) {
+        "val": func(function (val) {
             return val;
         }),
 
-        "switch": Moo.JS.Function (function (val1) {
-            return Moo.JS.Function (function (val2) {
+        "switch": func(function (val1) {
+            return func(function (val2) {
                 var willExec = (val1 === val2);
 
-                return Moo.JS.Function (function (func) {
+                return func(function (func) {
                     if (willExec) {
                         func();
                     }
@@ -33,10 +45,10 @@
             });
         }),
 
-        ary: Moo.JS.Function(function (value) {
+        ary: func(function (value) {
             var newArray = new Moo.JS.Array,
                 push = newArray.push(newArray),
-                appender = Moo.JS.Function(function (value) {
+                appender = func(function (value) {
                     if (value !== Moo.JS.Nil && value !== undefined) {
                         push(value);
                         return appender;

@@ -1,12 +1,24 @@
 (function () {
     "use strict";
+    var constructor, obj, func, proto;
 
-    Moo.JS.Array = function () {
-        this.__s = [];
-    };
+    /* node switch */
+    if (typeof module !== 'undefined') {
+        constructor = Moo.JS.Array = function () {
+            this.__s = [];
+        };
+        obj = Moo.JS.Object;
+        func = Moo.JS.Function;
+    } else {
+        module.exports = constructor = function () {
+            this.__s = [];
+        };
+        obj = require('./object');
+        func = require('./function');
+    }
 
-    var proto = Moo.JS.Array.prototype = Object.create(Moo.JS.Object.prototype);
-    proto.toNativeString = Moo.JS.Function(function (list) {
+    proto = constructor.prototype = Object.create(obj.prototype);
+    proto.toNativeString = func(function (list) {
         if (!list) {
             list = [];
         }
@@ -18,27 +30,27 @@
             return collector + ' ' + val.toNativeString(list);
         }, '') + ')';
     });
-    proto.push = Moo.JS.Function(function (self) {
-        return Moo.JS.Function(function (value) {
+    proto.push = func(function (self) {
+        return func(function (value) {
             self.__s.push(value);
             return value;
         });
     });
-    proto.unshift = Moo.JS.Function(function (self) {
-        return Moo.JS.Function(function (value) {
+    proto.unshift = func(function (self) {
+        return func(function (value) {
             self.__s.unshift(value);
             return value;
         });
     });
-    proto.each = Moo.JS.Function(function (self) {
-        return Moo.JS.Function(function (callback) {
+    proto.each = func(function (self) {
+        return func(function (callback) {
             self.__s.every(function (v) {
                 callback(v);
                 return true;
             })
         });
     });
-    proto.shift = Moo.JS.Function(function (self) {
+    proto.shift = func(function (self) {
         return self.__s.shift();
     });
 }());
