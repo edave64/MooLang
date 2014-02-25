@@ -1,29 +1,43 @@
 (function () {
     "use strict";
+    var constructor,
+        func,
+        bool;
 
-    Moo.JS.Comparable = function (proto) {
-        proto['>'] = Moo.JS.Function(function (self) {
-            return Moo.JS.Function(function (other) {
-                return new Moo.JS.Boolean(self.__s > other.__s);
-            });
-        });
+    constructor = {};
 
-        proto['>='] = Moo.JS.Function(function (self) {
-            return Moo.JS.Function(function (other) {
-                return new Moo.JS.Boolean(self.__s >= other.__s);
-            });
-        });
+    /* node switch */
+    if (typeof module !== 'undefined') {
+        module.exports = constructor;
+        func = require('./function');
+        bool = require('./boolean');
+    } else {
+        Moo.JS.Comparable = constructor;
+        func = Moo.JS.Function;
+        bool = Moo.JS.Boolean;
+    }
 
-        proto['<='] = Moo.JS.Function(function (self) {
-            return Moo.JS.Function(function (other) {
-                return new Moo.JS.Boolean(self.__s <= other.__s);
-            });
+    constructor['>'] = func(function (self) {
+        return func(function (other) {
+            return new bool(self.__s > other.__s);
         });
+    });
 
-        proto['<'] = Moo.JS.Function(function (self) {
-            return Moo.JS.Function(function (other) {
-                return new Moo.JS.Boolean(self.__s < other.__s);
-            });
+    constructor['>='] = func(function (self) {
+        return func(function (other) {
+            return new bool(self.__s >= other.__s);
         });
-    };
+    });
+
+    constructor['<='] = func(function (self) {
+        return func(function (other) {
+            return new bool(self.__s <= other.__s);
+        });
+    });
+
+    constructor['<'] = func(function (self) {
+        return func(function (other) {
+            return new bool(self.__s < other.__s);
+        });
+    });
 }());
