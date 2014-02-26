@@ -1,5 +1,6 @@
 #MooLang
 [![Build Status](https://travis-ci.org/edave64/MooLang.png?branch=master)](https://travis-ci.org/edave64/MooLang)
+
 MooLang(Minimal Object-Oriented Language) is a dynamic programming language. It is
 build to be an extremly light and flexible, with an extensive, Ruby-like, API.
 
