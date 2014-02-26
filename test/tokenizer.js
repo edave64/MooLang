@@ -21,11 +21,11 @@
                     return tokenizer('testing');
                 },
 
-                'length': function (topic) {
+                length: function (topic) {
                     assert.equal(topic.length, 1);
                 },
 
-                'recognized': function (topic) {
+                recognized: function (topic) {
                     assert.ok(topic[0] !== undefined);
                     assert.equal(topic[0].type, 'identifier');
                     assert.equal(topic[0].value, 'testing');
@@ -36,11 +36,11 @@
                     return tokenizer('123');
                 },
 
-                'length': function (topic) {
+                length: function (topic) {
                     assert.equal(topic.length, 1);
                 },
 
-                'recognized': function (topic) {
+                recognized: function (topic) {
                     assert.ok(topic[0] !== undefined);
                     assert.equal(topic[0].type, 'number');
                     assert.equal(topic[0].value, '123');
@@ -51,11 +51,11 @@
                     return tokenizer("'TestedSQ");
                 },
 
-                'length': function (topic) {
+                length: function (topic) {
                     assert.equal(topic.length, 1);
                 },
 
-                'recognized': function (topic) {
+                recognized: function (topic) {
                     assert.ok(topic[0] !== undefined);
                     assert.equal(topic[0].type, 'string');
                     assert.equal(topic[0].value, 'TestedSQ');
@@ -66,14 +66,55 @@
                     return tokenizer('"TestedDQ"');
                 },
 
-                'length': function (topic) {
+                length: function (topic) {
                     assert.equal(topic.length, 1);
                 },
 
-                'recognized': function (topic) {
+                recognized: function (topic) {
                     assert.ok(topic[0] !== undefined);
                     assert.equal(topic[0].type, 'string');
                     assert.equal(topic[0].value, 'TestedDQ');
+                }
+            }
+        },
+        'do blocks': {
+            keywords: {
+                topic: function () {
+                    return tokenizer('do end');
+                },
+
+                length: function (topic) {
+                    assert.equal(topic.length, 2);
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'keyword', value: 'do', line: 1 },
+                        { type: 'keyword', value: 'end', line: 1 }
+                    ]);
+                }
+            },
+
+            'with multiple lines': {
+                topic: function () {
+                    return tokenizer('do end');
+                },
+
+                length: function (topic) {
+                    assert.equal(topic.length, 2);
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'keyword',     value: 'do',  line: 1 },
+                        { type: 'identifier',  value: 'a',   line: 1 },
+                        { type: 'identifier',  value: 'b',   line: 1 },
+                        { type: 'punctuation', value: ';',   line: 1 },
+                        { type: 'identifier',  value: 'b',   line: 2 },
+                        { type: 'identifier',  value: 'a',   line: 2 },
+                        { type: 'punctuation', value: ';',   line: 2 },
+                        { type: 'keyword',     value: 'end', line: 3 }
+                    ]);
                 }
             }
         }
