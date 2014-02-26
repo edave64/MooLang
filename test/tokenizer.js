@@ -97,11 +97,11 @@
 
             'with multiple lines': {
                 topic: function () {
-                    return tokenizer('do end');
+                    return tokenizer('do a b\nb a\nend');
                 },
 
                 length: function (topic) {
-                    assert.equal(topic.length, 2);
+                    assert.equal(topic.length, 8);
                 },
 
                 recognized: function (topic) {
