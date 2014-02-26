@@ -18,7 +18,7 @@
         'literal recognition': {
             'identifier': {
                 topic: function () {
-                    return tokenizer('testing');
+                    return tokenizer('smallBIG_4');
                 },
 
                 length: function (topic) {
@@ -26,9 +26,9 @@
                 },
 
                 recognized: function (topic) {
-                    assert.ok(topic[0] !== undefined);
-                    assert.equal(topic[0].type, 'identifier');
-                    assert.equal(topic[0].value, 'testing');
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'smallBIG_4', line: 1 }
+                    ]);
                 }
             },
             'integer': {
@@ -41,9 +41,9 @@
                 },
 
                 recognized: function (topic) {
-                    assert.ok(topic[0] !== undefined);
-                    assert.equal(topic[0].type, 'number');
-                    assert.equal(topic[0].value, '123');
+                    assert.deepEqual(topic, [
+                        { type: 'number', value: '123', line: 1 }
+                    ]);
                 }
             },
             'single-quote strings': {
@@ -56,9 +56,9 @@
                 },
 
                 recognized: function (topic) {
-                    assert.ok(topic[0] !== undefined);
-                    assert.equal(topic[0].type, 'string');
-                    assert.equal(topic[0].value, 'TestedSQ');
+                    assert.deepEqual(topic, [
+                        { type: 'string', value: 'TestedSQ', line: 1 }
+                    ]);
                 }
             },
             'double-quote strings': {
@@ -66,14 +66,10 @@
                     return tokenizer('"TestedDQ"');
                 },
 
-                length: function (topic) {
-                    assert.equal(topic.length, 1);
-                },
-
                 recognized: function (topic) {
-                    assert.ok(topic[0] !== undefined);
-                    assert.equal(topic[0].type, 'string');
-                    assert.equal(topic[0].value, 'TestedDQ');
+                    assert.deepEqual(topic, [
+                        { type: 'string', value: 'TestedDQ', line: 1 }
+                    ]);
                 }
             }
         },
@@ -81,10 +77,6 @@
             keywords: {
                 topic: function () {
                     return tokenizer('do end');
-                },
-
-                length: function (topic) {
-                    assert.equal(topic.length, 2);
                 },
 
                 recognized: function (topic) {
@@ -100,10 +92,6 @@
                     return tokenizer('do a b\nb a\nend');
                 },
 
-                length: function (topic) {
-                    assert.equal(topic.length, 8);
-                },
-
                 recognized: function (topic) {
                     assert.deepEqual(topic, [
                         { type: 'keyword',     value: 'do',  line: 1 },
@@ -114,6 +102,138 @@
                         { type: 'identifier',  value: 'a',   line: 2 },
                         { type: 'punctuation', value: ';',   line: 2 },
                         { type: 'keyword',     value: 'end', line: 3 }
+                    ]);
+                }
+            }
+        },
+        'punctuation': {
+            'single colon assignment': {
+                topic: function () {
+                    return tokenizer('testVar2 :: 23');
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'testVar2', line: 1 },
+                        { type: 'punctuation', value: '::', line: 1 },
+                        { type: 'number', value: '23', line: 1 }
+                    ]);
+                }
+            },
+            'double colon assignment': {
+                topic: function () {
+                    return tokenizer('testVar: 42');
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'testVar', line: 1 },
+                        { type: 'punctuation', value: ':', line: 1 },
+                        { type: 'number', value: '42', line: 1 }
+                    ]);
+                }
+            },
+            'dot access': {
+                topic: function () {
+                    return tokenizer('testObj.attribute');
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'testObj', line: 1 },
+                        { type: 'punctuation', value: '.', line: 1 },
+                        { type: 'identifier', value: 'attribute', line: 1 }
+                    ]);
+                }
+            },
+            'dollar access': {
+                topic: function () {
+                    return tokenizer('testObj2$method');
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'testObj2', line: 1 },
+                        { type: 'punctuation', value: '$', line: 1 },
+                        { type: 'identifier', value: 'method', line: 1 }
+                    ]);
+                }
+            },
+            'operator access': {
+                topic: function () {
+                    return tokenizer('testObj3 +*-/&|%§²³!?~<>^° operant');
+                },
+
+                complex: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'testObj3', line: 1 },
+                        { type: 'operator', value: '+*-/&|%§²³!?~<>^°', line: 1 },
+                        { type: 'identifier', value: 'operant', line: 1 }
+                    ]);
+                }
+            },
+            'brackets access': {
+                topic: function () {
+                    return tokenizer('testObj4[\'attributeName]');
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'testObj4', line: 1 },
+                        { type: 'punctuation', value: '[', line: 1 },
+                        { type: 'string', value: 'attributeName', line: 1 },
+                        { type: 'punctuation', value: ']', line: 1 }
+                    ]);
+                }
+            },
+            'newline': {
+                topic: function () {
+                    return tokenizer('method1 attr1 attr2\nmethod2 attr3 attr4');
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'method1', line: 1 },
+                        { type: 'identifier', value: 'attr1', line: 1 },
+                        { type: 'identifier', value: 'attr2', line: 1 },
+                        { type: 'punctuation', value: ';', line: 1 },
+                        { type: 'identifier', value: 'method2', line: 2 },
+                        { type: 'identifier', value: 'attr3', line: 2 },
+                        { type: 'identifier', value: 'attr4', line: 2 }
+                    ]);
+                }
+            },
+            'semicolon': {
+                topic: function () {
+                    return tokenizer('method1 attr1 attr2;method2 attr3 attr4');
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'method1', line: 1 },
+                        { type: 'identifier', value: 'attr1', line: 1 },
+                        { type: 'identifier', value: 'attr2', line: 1 },
+                        { type: 'punctuation', value: ';', line: 1 },
+                        { type: 'identifier', value: 'method2', line: 1 },
+                        { type: 'identifier', value: 'attr3', line: 1 },
+                        { type: 'identifier', value: 'attr4', line: 1 }
+                    ]);
+                }
+            },
+            'comma': {
+                topic: function () {
+                    return tokenizer('method1 attr1, attr2\nmethod2,\nattr3 attr4');
+                },
+
+                recognized: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'method1', line: 1 },
+                        { type: 'identifier', value: 'attr1', line: 1 },
+                        { type: 'identifier', value: 'attr2', line: 1 },
+                        { type: 'punctuation', value: ';', line: 1 },
+                        { type: 'identifier', value: 'method2', line: 2 },
+                        { type: 'identifier', value: 'attr3', line: 3 },
+                        { type: 'identifier', value: 'attr4', line: 3 }
                     ]);
                 }
             }
