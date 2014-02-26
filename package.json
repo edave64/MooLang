@@ -1,0 +1,8 @@
+{
+    "name": "MooLang",
+    "version": "0.1",
+    "description": "a light and dynamic scripting language",
+    "scripts": {
+        "test": "vows --spec"
+    }
+}
