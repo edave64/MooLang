@@ -271,6 +271,84 @@
                     ]);
                 }
             }
+        },
+        'errors': {
+            'unclosed': {
+                "do": function () {
+                    assert.throws(
+                        function() {
+                            tokenizer('do');
+                        },
+                        Error,
+                        "Unexpected EOF (unmatched do)"
+                    );
+                },
+                "(": function () {
+                    assert.throws(
+                        function() {
+                            tokenizer('(');
+                        },
+                        Error,
+                        "Unexpected EOF (unmatched ()"
+                    );
+                },
+                "[": function () {
+                    assert.throws(
+                        function() {
+                            tokenizer('[');
+                        },
+                        Error,
+                        "Unexpected EOF (unmatched [)"
+                    );
+                },
+                "{": function () {
+                    assert.throws(
+                        function() {
+                            tokenizer('{');
+                        },
+                        Error,
+                        "Unexpected EOF (unmatched {)"
+                    );
+                }
+            },
+            'To early closed': {
+                "end": function () {
+                    assert.throws(
+                        function() {
+                            tokenizer('end');
+                        },
+                        Error,
+                        "Unexpected end (unmatched root)"
+                    );
+                },
+                ")": function () {
+                    assert.throws(
+                        function() {
+                            tokenizer(')');
+                        },
+                        Error,
+                        "Unexpected ) (unmatched root)"
+                    );
+                },
+                "]": function () {
+                    assert.throws(
+                        function() {
+                            tokenizer(']');
+                        },
+                        Error,
+                        "Unexpected ] (unmatched root)"
+                    );
+                },
+                "}": function () {
+                    assert.throws(
+                        function() {
+                            tokenizer('}');
+                        },
+                        Error,
+                        "Unexpected } (unmatched root)"
+                    );
+                }
+            }
         }
     }).export(module);
 }());
