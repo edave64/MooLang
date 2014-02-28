@@ -1,5 +1,6 @@
 (function () {
     "use strict";
+
     var tokenizer,
         vows = require('vows'),
         assert = require('assert');
@@ -234,6 +235,39 @@
                         { type: 'identifier', value: 'method2', line: 2 },
                         { type: 'identifier', value: 'attr3', line: 3 },
                         { type: 'identifier', value: 'attr4', line: 3 }
+                    ]);
+                }
+            },
+            'automaticly inserted nil': {
+                topic: function () {
+                    return tokenizer('method4 8,, 2,\n7');
+                },
+
+                inserted: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier', value: 'method4', line: 1 },
+                        { type: 'number',     value: 8,         line: 1 },
+                        { type: 'identifier', value: 'nil',     line: 1 },
+                        { type: 'number',     value: 2,         line: 1 },
+                        { type: 'number',     value: 7,         line: 2 }
+                    ]);
+                }
+            },
+            'comments': {
+                topic: function () {
+                    return tokenizer('method5 8 # This is a comment\n' + '# This is a full comment line\n' + "method6 'asd");
+                },
+
+                inserted: function (topic) {
+                    assert.deepEqual(topic, [
+                        { type: 'identifier',  value: 'method5',                      line: 1 },
+                        { type: 'number',      value: 8,                              line: 1 },
+                        { type: 'comment',     value: ' This is a comment',           line: 1 },
+                        { type: 'punctuation', value: ';',                            line: 1 },
+                        { type: 'comment',     value: ' This is a full comment line', line: 2 },
+                        { type: 'punctuation', value: ';',                            line: 2 },
+                        { type: 'identifier',  value: 'method6',                      line: 3 },
+                        { type: 'string',      value: 'asd',                          line: 3 }
                     ]);
                 }
             }
