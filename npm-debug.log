@@ -1,0 +1,70 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'coverall' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 warn package.json MooLang@0.0.1 No repository field.
+6 warn package.json vows@0.7.0 No repository field.
+7 verbose readDependencies using package.json deps
+8 verbose cache add [ 'coverall', null ]
+9 verbose cache add name=undefined spec="coverall" args=["coverall",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: 'coverall',
+10 verbose parsed url   path: 'coverall',
+10 verbose parsed url   href: 'coverall' }
+11 silly lockFile f728a373-coverall coverall
+12 verbose lock coverall C:\Users\David Bachmann\AppData\Roaming\npm-cache\f728a373-coverall.lock
+13 silly lockFile f728a373-coverall coverall
+14 silly lockFile f728a373-coverall coverall
+15 verbose addNamed [ 'coverall', '' ]
+16 verbose addNamed [ null, '*' ]
+17 silly lockFile 6713b51e-coverall coverall@
+18 verbose lock coverall@ C:\Users\David Bachmann\AppData\Roaming\npm-cache\6713b51e-coverall.lock
+19 silly addNameRange { name: 'coverall', range: '*', hasData: false }
+20 verbose url raw coverall
+21 verbose url resolving [ 'https://registry.npmjs.org/', './coverall' ]
+22 verbose url resolved https://registry.npmjs.org/coverall
+23 info trying registry request attempt 1 at 18:49:11
+24 http GET https://registry.npmjs.org/coverall
+25 http 404 https://registry.npmjs.org/coverall
+26 silly registry.get cb [ 404,
+26 silly registry.get   { date: 'Thu, 06 Mar 2014 17:49:11 GMT',
+26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B)',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     'cache-control': 'max-age=0',
+26 silly registry.get     'content-length': '52',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     age: '0',
+26 silly registry.get     'x-served-by': 'cache-v37-ASH, cache-fra1233-FRA',
+26 silly registry.get     'x-cache': 'MISS, MISS',
+26 silly registry.get     'x-cache-hits': '0, 0',
+26 silly registry.get     'x-timer': 'S1394128151.355725050,VS0,VS278,VE301,VE116',
+26 silly registry.get     'keep-alive': 'timeout=10, max=50',
+26 silly registry.get     connection: 'Keep-Alive' } ]
+27 silly lockFile 6713b51e-coverall coverall@
+28 silly lockFile 6713b51e-coverall coverall@
+29 error 404 'coverall' is not in the npm registry.
+29 error 404 You should bug the author to publish it
+29 error 404 It was specified as a dependency of 'MooLang'
+29 error 404
+29 error 404 Note that you can also install from a
+29 error 404 tarball, folder, or http url, or git url.
+30 error System Windows_NT 6.2.9200
+31 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "coverall"
+32 error cwd C:\Users\David Bachmann\WebstormProjects\MooLang
+33 error node -v v0.10.26
+34 error npm -v 1.4.3
+35 error code E404
+36 verbose exit [ 1, true ]
