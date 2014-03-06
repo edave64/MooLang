@@ -1,8 +1,13 @@
 {
-    "name": "MooLang",
-    "version": "0.0.1",
-    "description": "a light and dynamic scripting language",
-    "scripts": {
-        "test": "vows test/*"
-    }
+  "name": "MooLang",
+  "version": "0.0.1",
+  "description": "a light and dynamic scripting language",
+  "scripts": {
+    "test": "vows test/*",
+    "coveralls": "./node_modules/.bin/istanbul cover ./node_modules/.bin/vows --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+  },
+  "dependencies": {
+    "coveralls": "^2.8.0",
+    "istanbul": "^0.2.6"
+  }
 }
